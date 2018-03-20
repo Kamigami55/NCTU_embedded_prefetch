@@ -13,8 +13,10 @@ int transpose_verify(int *test_src, int *test_dest, int w, int h)
     int *expected  = (int *) malloc(sizeof(int) * w * h);
     naive_transpose(test_src, expected, w, h);
     if(memcmp(test_dest, expected, w*h*sizeof(int)) != 0) {
+        free(expected);
         return 1;
     } else {
+        free(expected);
         return 0;
     }
 }
