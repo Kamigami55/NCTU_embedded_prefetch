@@ -12,7 +12,7 @@ int transpose_verify(int *test_src, int *test_dest, int w, int h)
 {
     int *expected  = (int *) malloc(sizeof(int) * w * h);
     naive_transpose(test_src, expected, w, h);
-    if(memcmp(test_dest, expected, w*h*sizeof(int)) != 0) {
+    if (memcmp(test_dest, expected, w * h * sizeof(int)) != 0) {
         free(expected);
         return 1;
     } else {
@@ -33,7 +33,7 @@ void naive_transpose(int *src, int *dst, int w, int h)
 void neon_transpose(int *src, int *dst, int w, int h)
 {
     for (int x = 0; x < w; x += 4) {
-        for(int y = 0; y < h; y += 4) {
+        for (int y = 0; y < h; y += 4) {
             int32x4_t I0 = vld1q_s32((int32_t *)(src + (y + 0) * w + x));
             int32x4_t I1 = vld1q_s32((int32_t *)(src + (y + 1) * w + x));
             int32x4_t I2 = vld1q_s32((int32_t *)(src + (y + 2) * w + x));
@@ -59,12 +59,12 @@ void neon_transpose(int *src, int *dst, int w, int h)
 void neon_prefetch_transpose(int *src, int *dst, int w, int h)
 {
     for (int x = 0; x < w; x += 4) {
-        for(int y = 0; y < h; y += 4) {
+        for (int y = 0; y < h; y += 4) {
 #define PFDIST  8
-            __builtin_prefetch(src+(y + PFDIST + 0) *w + x);
-            __builtin_prefetch(src+(y + PFDIST + 1) *w + x);
-            __builtin_prefetch(src+(y + PFDIST + 2) *w + x);
-            __builtin_prefetch(src+(y + PFDIST + 3) *w + x);
+            __builtin_prefetch(src + (y + PFDIST + 0) *w + x);
+            __builtin_prefetch(src + (y + PFDIST + 1) *w + x);
+            __builtin_prefetch(src + (y + PFDIST + 2) *w + x);
+            __builtin_prefetch(src + (y + PFDIST + 3) *w + x);
 
             int32x4_t I0 = vld1q_s32((int32_t *)(src + (y + 0) * w + x));
             int32x4_t I1 = vld1q_s32((int32_t *)(src + (y + 1) * w + x));

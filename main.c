@@ -16,7 +16,7 @@
 static long diff_in_us(struct timespec t1, struct timespec t2)
 {
     struct timespec diff;
-    if (t2.tv_nsec-t1.tv_nsec < 0) {
+    if (t2.tv_nsec - t1.tv_nsec < 0) {
         diff.tv_sec  = t2.tv_sec - t1.tv_sec - 1;
         diff.tv_nsec = t2.tv_nsec - t1.tv_nsec + 1000000000;
     } else {
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     clock_gettime(CLOCK_REALTIME, &start);
     neon_transpose(src, out, TEST_W, TEST_H);
     clock_gettime(CLOCK_REALTIME, &end);
-    if(!transpose_verify(src, out, TEST_W, TEST_H)) printf("NEON verify fails;");
+    if (!transpose_verify(src, out, TEST_W, TEST_H)) printf("NEON verify fails;");
     printf("neon: \t\t %ld us\n", diff_in_us(start, end));
     //printf("sse per iteration: \t\t %lf us\n", (double)diff_in_us(start, end)/sse_iteration);
 #endif
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     clock_gettime(CLOCK_REALTIME, &start);
     neon_prefetch_transpose(src, out, TEST_W, TEST_H);
     clock_gettime(CLOCK_REALTIME, &end);
-    if(!transpose_verify(src, out, TEST_W, TEST_H)) printf("NEON prefetch verify fails;");
+    if (!transpose_verify(src, out, TEST_W, TEST_H)) printf("NEON prefetch verify fails;");
     printf("neon_pre: \t\t %ld us\n", diff_in_us(start, end));
     //printf("sse per iteration: \t\t %lf us\n", (double)diff_in_us(start, end)/sse_iteration);
 #endif

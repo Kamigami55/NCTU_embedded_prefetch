@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ASTYLE_OPTS="--style=kr --indent=spaces=4"
+ASTYLE_OPTS="--style=kr --indent=spaces=4 --pad-oper --pad-comma --pad-header --unpad-paren"
 CPPCHECK_OPTS="-I. --error-exitcode=1 ."
 
 RETURN=0
